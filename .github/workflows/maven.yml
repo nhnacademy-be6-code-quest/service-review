@@ -52,8 +52,4 @@ jobs:
           script: "./startup.sh"
 
       - name: Run SonarQube
-        run: mvn clean verify sonar:sonar \
-          -Dsonar.projectKey=coderequest-service-review \
-          -Dsonar.projectName='coderequest-service-review' \
-          -Dsonar.host.url=http://133.186.241.167:9000 \
-          -Dsonar.token=sqp_7fbf9c8ad299febcff10e43bb16eec44ae70edfa
+        run: mvn sonar:sonar -Dsonar.projectKey=coderequest-service-review -Dsonar.projectName='coderequest-service-review' -Dsonar.host.url=http://133.186.241.167:9000 -Dsonar.token=sqp_7fbf9c8ad299febcff10e43bb16eec44ae70edfa
