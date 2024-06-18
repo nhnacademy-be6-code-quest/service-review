@@ -1,10 +1,14 @@
 package com.nhnacademy.codequestreview.dto;
 
+
+
 import lombok.Data;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
-public class NoPhotoReviewResponseDTO {
+public class PhotoReviewResponseDTO {
     private Long id;
     private byte score;
     private String content;
@@ -13,4 +17,5 @@ public class NoPhotoReviewResponseDTO {
     private int point;
     private Long clientId;
     private Long orderDetailId;
+    private List<String> photoUrls;
 }

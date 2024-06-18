@@ -1,12 +1,11 @@
 package com.nhnacademy.codequestreview.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
-@Getter
+@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "photo_review_image")
 public class PhotoReviewImage {
@@ -15,17 +14,16 @@ public class PhotoReviewImage {
     @Column(name = "photo_review_image_id")
     private Long id;
 
-    @Setter
     @ManyToOne(optional = false)
     @JoinColumn(name = "photo_review_id", nullable = false)
     private PhotoReview photoReview;
 
-    @Setter
     @Column(name = "photo_url", nullable = false)
     private String photoUrl;
 
-    public PhotoReviewImage(PhotoReview photoReview, String photoUrl) {
+    public PhotoReviewImage(PhotoReview photoReview, String url) {
         this.photoReview = photoReview;
-        this.photoUrl = photoUrl;
+        this.photoUrl = url;
     }
+
 }

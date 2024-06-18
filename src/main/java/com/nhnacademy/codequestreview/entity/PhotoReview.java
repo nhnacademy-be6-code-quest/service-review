@@ -1,17 +1,13 @@
 package com.nhnacademy.codequestreview.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
-@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "photo_review")
 public class PhotoReview {
@@ -20,48 +16,28 @@ public class PhotoReview {
     @Column(name = "photo_review_id")
     private Long id;
 
-    @Setter
-    @Min(1)
-    @Max(5)
     @Column(name = "photo_review_score", nullable = false)
-    private byte score;  // TINYINT에 해당하는 byte 타입
+    private byte score;
 
-    @Setter
     @Column(name = "photo_review_content", length = 10)
     private String content;
 
-    @Setter
     @Column(name = "photo_review_register_date", nullable = false)
     private LocalDateTime registerDate;
 
-    @Setter
-    @Column(name = "photo_review_last_modify_date") // null 허용
+    @Column(name = "photo_review_last_modify_date")
     private LocalDateTime lastModifyDate;
 
-    @Setter
     @Column(name = "photo_review_point", nullable = false)
     private int point;
 
-    @Setter
     @Column(name = "client_id", nullable = false)
     private Long clientId;
 
-    @Setter
     @Column(name = "order_detail_id", nullable = false)
     private Long orderDetailId;
 
-    @OneToMany(mappedBy = "photoReview", cascade = CascadeType.REMOVE)
+    //@OneToMany(mappedBy = "photoReview", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "photoReview", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<PhotoReviewImage> photoReviewImages;
-
-    public PhotoReview() {
-        this.registerDate = LocalDateTime.now();
-        this.point = 500;
-    }
-
-    public PhotoReview(byte score, String content) {
-        this.score = score;
-        this.content = content;
-        this.registerDate = LocalDateTime.now();
-        this.point = 500;
-    }
 }

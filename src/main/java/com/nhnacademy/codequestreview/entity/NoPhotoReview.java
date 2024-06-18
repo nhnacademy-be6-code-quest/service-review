@@ -1,14 +1,11 @@
 package com.nhnacademy.codequestreview.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import lombok.*;
-
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "no_photo_review")
@@ -30,7 +27,7 @@ public class NoPhotoReview {
     @Column(name = "no_photo_review_last_modify_date")
     private LocalDateTime lastModifyDate;
 
-    @Column(name = "no_photo_review_point")
+    @Column(name = "no_photo_review_point", nullable = false)
     private int point;
 
     @Column(name = "client_id", nullable = false)
