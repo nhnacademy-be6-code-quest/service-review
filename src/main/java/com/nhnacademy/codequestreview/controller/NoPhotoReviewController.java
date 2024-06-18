@@ -43,5 +43,4 @@ public class NoPhotoReviewController {
         noPhotoReviewService.deleteReview(id);
         return ResponseEntity.noContent().build();
     }
-
 }

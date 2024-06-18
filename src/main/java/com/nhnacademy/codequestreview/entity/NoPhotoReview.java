@@ -18,8 +18,6 @@ public class NoPhotoReview {
     @Column(name = "no_photo_review_id")
     private Long id;
 
-//    @Min(1)
-//    @Max(5)
     @Column(name = "no_photo_review_score", nullable = false)
     private byte score;
 
@@ -40,5 +38,4 @@ public class NoPhotoReview {
 
     @Column(name = "order_detail_id", nullable = false)
     private Long orderDetailId;
-
 }
