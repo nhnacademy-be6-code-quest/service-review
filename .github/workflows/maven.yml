@@ -54,7 +54,7 @@ jobs:
 
       - name: Run SonarQube
 #        run: mvn sonar:sonar -Dsonar.projectKey=code-quest-review -Dsonar.projectName='code-quest-review' -Dsonar.host.url=${{secrets.SONAR_HOST}} -Dsonar.token=${{secrets.SONAR_TOKEN}}
-        run: mvn clean verify sonar:sonar \
+        run: mvn sonar:sonar \
           -Dsonar.projectKey=code-quest-review \
           -Dsonar.projectName='code-quest-review' \
           -Dsonar.host.url=http://133.186.241.167:9000 \
