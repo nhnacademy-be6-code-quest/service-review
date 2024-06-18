@@ -1,0 +1,14 @@
+GET localhost:8080/no-photo-reviews
+
+###
+
+### Create a new NoPhotoReview
+POST http://localhost:8080/no-photo-reviews
+Content-Type: application/json
+
+{
+  "score": 5,
+  "content": "Great!",
+  "clientId": 12345,
+  "orderDetailId": 67890
+}
