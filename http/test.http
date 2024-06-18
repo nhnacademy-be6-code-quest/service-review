@@ -1,14 +1,36 @@
-GET localhost:8080/no-photo-reviews
+### 사진없는리뷰 생성
 
-###
-
-### Create a new NoPhotoReview
 POST http://localhost:8080/no-photo-reviews
 Content-Type: application/json
 
 {
   "score": 5,
-  "content": "Great!",
-  "clientId": 12345,
-  "orderDetailId": 67890
+  "content": "test1",
+  "clientId": 1,
+  "orderDetailId": 1
 }
+
+### 사진없는리뷰 단건조회
+
+GET http://localhost:8080/no-photo-reviews/3
+
+### 사진없는리뷰 전체조회
+
+GET localhost:8080/no-photo-reviews
+
+### 사진없는리뷰 수정
+
+PUT http://localhost:8080/no-photo-reviews/1
+Content-Type: application/json
+
+{
+  "score": 5,
+  "content": "테스트1",
+  "clientId": 1,
+  "orderDetailId": 1
+}
+
+### 사진없는리뷰 삭제
+
+DELETE http://localhost:8080/no-photo-reviews/1
+
