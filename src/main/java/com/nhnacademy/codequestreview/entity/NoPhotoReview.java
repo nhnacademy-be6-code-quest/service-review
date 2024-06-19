@@ -20,7 +20,7 @@ public class NoPhotoReview {
     @Column(name = "no_photo_review_score", nullable = false)
     private byte score;
 
-    @Column(name = "no_photo_review_content", length = 10)
+    @Column(name = "no_photo_review_content", length = 1000)
     private String content;
 
     @Column(name = "no_photo_review_register_date", nullable = false)
