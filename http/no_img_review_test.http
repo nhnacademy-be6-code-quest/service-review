@@ -12,7 +12,7 @@ Content-Type: application/json
 
 ### 사진없는리뷰 단건조회
 
-GET http://localhost:8080/no-photo-reviews/3
+GET http://localhost:8080/no-photo-reviews/1
 
 ### 사진없는리뷰 전체조회
 

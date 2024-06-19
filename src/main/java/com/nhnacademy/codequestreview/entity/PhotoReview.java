@@ -3,6 +3,7 @@ package com.nhnacademy.codequestreview.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -37,7 +38,7 @@ public class PhotoReview {
     @Column(name = "order_detail_id", nullable = false)
     private Long orderDetailId;
 
-    //@OneToMany(mappedBy = "photoReview", cascade = CascadeType.ALL)
-    @OneToMany(mappedBy = "photoReview", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    private List<PhotoReviewImage> photoReviewImages;
+    @OneToMany(mappedBy = "photoReview", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<PhotoReviewImage> photoReviewImages = new ArrayList<>();
+
 }
