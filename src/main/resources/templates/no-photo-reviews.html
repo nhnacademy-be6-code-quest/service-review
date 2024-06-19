@@ -14,6 +14,7 @@
       padding: 15px;
       border: 1px solid #ddd;
       border-radius: 5px;
+      position: relative;
     }
 
     .review-content {
@@ -25,9 +26,10 @@
       color: gold;
     }
 
-    .expanded-review {
-      display: flex;
-      flex-direction: column;
+    .edit-button {
+      position: absolute;
+      right: 15px;
+      bottom: 15px;
     }
   </style>
 </head>
@@ -47,9 +49,9 @@
       <p>주문 상세 ID: <span th:text="${review.orderDetailId}"></span></p>
       <p>포인트: <span th:text="${review.point}"></span></p>
     </div>
-    <div class="expanded-review" style="display: none;">
-      <!-- 여기에 확장된 리뷰에 표시할 추가 정보가 있으면 넣을 수 있습니다. -->
-    </div>
+    <button type="button" class="btn btn-primary edit-button" onclick="editReview(event)"
+            th:data-review-id="${review.id}">수정
+    </button>
   </div>
 </div>
 
@@ -63,6 +65,13 @@
       starContainer.innerHTML = '★'.repeat(score);
     });
   });
+
+  function editReview(event) {
+    event.stopPropagation();
+    const reviewId = event.currentTarget.getAttribute("data-review-id");
+    // 여기에서 reviewId를 사용합니다.
+    window.location.href = "/view/edit-no-photo-review/" + reviewId;
+  }
 </script>
 </body>
 </html>

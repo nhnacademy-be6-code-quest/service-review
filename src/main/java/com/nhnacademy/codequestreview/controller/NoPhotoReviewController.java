@@ -42,7 +42,6 @@ public class NoPhotoReviewController {
     @PutMapping("/{id}")
     public ResponseEntity<NoPhotoReviewResponseDTO> updateReview(@PathVariable Long id,
         @Valid @RequestBody NoPhotoReviewRequestDTO noPhotoReviewRequestDTO) {
-        //return ResponseEntity.ok(noPhotoReviewService.updateReview(id, noPhotoReviewRequestDTO));
         try {
             NoPhotoReviewResponseDTO updatedReview = noPhotoReviewService.updateReview(id,
                 noPhotoReviewRequestDTO);

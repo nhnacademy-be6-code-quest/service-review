@@ -21,14 +21,14 @@ GET http://localhost:8080/photo-reviews
 Content-Type: application/json
 
 ### 사진있는리뷰 수정
-PUT http://localhost:8080/photo-reviews/1211
+PUT http://localhost:8080/photo-reviews/1
 Content-Type: application/json
 
 {
-  "score": 3,
-  "content": "테스트2",
-  "clientId": 1,
-  "orderDetailId": 1,
+  "score": 4,
+  "content": "수정테스트",
+  "clientId": 3,
+  "orderDetailId": 3,
   "photoUrls": [
     "http://localhost:8080/img/sample_images_00.png",
     "http://localhost:8080/img/sample_images_01.png",

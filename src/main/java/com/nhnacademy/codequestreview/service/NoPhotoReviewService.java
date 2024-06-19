@@ -48,8 +48,6 @@ public class NoPhotoReviewService {
         noPhotoReview.setScore(noPhotoReviewRequestDTO.getScore());
         noPhotoReview.setContent(noPhotoReviewRequestDTO.getContent());
         noPhotoReview.setLastModifyDate(LocalDateTime.now());
-        noPhotoReview.setClientId(noPhotoReviewRequestDTO.getClientId());
-        noPhotoReview.setOrderDetailId(noPhotoReviewRequestDTO.getOrderDetailId());
 
         NoPhotoReview updatedReview = noPhotoReviewRepository.save(noPhotoReview);
         return toResponseDTO(updatedReview);

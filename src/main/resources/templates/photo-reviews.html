@@ -15,6 +15,7 @@
       border: 1px solid #ddd;
       border-radius: 5px;
       cursor: pointer;
+      position: relative;
     }
 
     .review-content {
@@ -56,6 +57,12 @@
       display: flex;
       flex-direction: column;
     }
+
+    .edit-button {
+      position: absolute;
+      right: 15px;
+      bottom: 15px;
+    }
   </style>
 </head>
 <body>
@@ -86,6 +93,9 @@
         <img th:src="${photoUrl}" style="width: 100%; max-width: 500px;">
       </div>
     </div>
+    <button type="button" class="btn btn-primary edit-button" onclick="editReview(event)"
+            th:data-review-id="${review.id}">수정
+    </button>
   </div>
 </div>
 
@@ -131,6 +141,7 @@
     const expandedReview = reviewElement.querySelector(".expanded-review");
     const thumbnail = reviewElement.querySelector(".thumbnail");
     const photoCount = reviewElement.querySelector(".photo-count");
+    const editButton = reviewElement.querySelector(".edit-button");
     if (expandedReview.style.display === "none" || expandedReview.style.display === "") {
       expandedReview.style.display = "block";
       if (thumbnail) {
@@ -138,6 +149,9 @@
       }
       if (photoCount) {
         photoCount.style.display = "none";
+      }
+      if (editButton) {
+        editButton.style.display = "none";
       }
     } else {
       expandedReview.style.display = "none";
@@ -147,8 +161,19 @@
       if (photoCount) {
         photoCount.style.display = "block";
       }
+      if (editButton) {
+        editButton.style.display = "block";
+      }
     }
   }
+
+  function editReview(event) {
+    event.stopPropagation();
+    const reviewId = event.currentTarget.getAttribute("data-review-id");
+    // 여기에서 reviewId를 사용합니다.
+    window.location.href = "/view/edit-photo-review/" + reviewId;
+  }
+
 </script>
 </body>
 </html>

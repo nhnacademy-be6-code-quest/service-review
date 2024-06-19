@@ -1,67 +1,49 @@
 package com.nhnacademy.codequestreview.controller;
 
 
+import com.nhnacademy.codequestreview.client.NoPhotoReviewClient;
+import com.nhnacademy.codequestreview.client.PhotoReviewClient;
 import com.nhnacademy.codequestreview.dto.NoPhotoReviewRequestDTO;
 import com.nhnacademy.codequestreview.dto.NoPhotoReviewResponseDTO;
 import com.nhnacademy.codequestreview.dto.PhotoReviewRequestDTO;
 import com.nhnacademy.codequestreview.dto.PhotoReviewResponseDTO;
-import com.nhnacademy.codequestreview.service.PhotoReviewService;
 import jakarta.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.client.RestTemplate;
-import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
-
 
 @Controller
 @RequiredArgsConstructor
 public class WebController {
 
-    private final RestTemplate restTemplate;
-    private String photoReviewApiUrl = "http://localhost:8080/photo-reviews";
-    private String noPhotoReviewApiUrl = "http://localhost:8080/no-photo-reviews";
+    private final PhotoReviewClient photoReviewClient;
+    private final NoPhotoReviewClient noPhotoReviewClient;
 
     @GetMapping("/")
     public String home() {
         return "index";
     }
 
+
     @GetMapping("/view/photo-reviews")
     public String getPhotoReviews(Model model) {
-        ResponseEntity<List<PhotoReviewResponseDTO>> responseEntity =
-            restTemplate.exchange(photoReviewApiUrl, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<PhotoReviewResponseDTO>>() {
-                });
+        ResponseEntity<List<PhotoReviewResponseDTO>> responseEntity = photoReviewClient.getAllReviews();
         List<PhotoReviewResponseDTO> reviews = responseEntity.getBody();
         model.addAttribute("reviews", reviews);
         return "photo-reviews";
-    }
-
-    @GetMapping("/view/no-photo-reviews")
-    public String getNoPhotoReviews(Model model) {
-        ResponseEntity<List<NoPhotoReviewResponseDTO>> responseEntity =
-            restTemplate.exchange(noPhotoReviewApiUrl, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<NoPhotoReviewResponseDTO>>() {
-                });
-        List<NoPhotoReviewResponseDTO> reviews = responseEntity.getBody();
-        model.addAttribute("reviews", reviews);
-        return "no-photo-reviews";
     }
 
     @GetMapping("/view/add-photo-review")
@@ -81,19 +63,57 @@ public class WebController {
 
         requestDTO.setPhotoUrls(photoUrls);
 
-        // PhotoReviewController API 호출
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<PhotoReviewRequestDTO> requestEntity = new HttpEntity<>(requestDTO, headers);
+        ResponseEntity<PhotoReviewResponseDTO> responseEntity = photoReviewClient.createReview(
+            requestDTO);
 
-        ResponseEntity<PhotoReviewResponseDTO> responseEntity = restTemplate.exchange(
-            photoReviewApiUrl, HttpMethod.POST, requestEntity, PhotoReviewResponseDTO.class);
-
-        if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
             return "redirect:/view/photo-reviews";
         } else {
-            throw new RuntimeException("Failed to create review");
+            throw new RuntimeException("리뷰를 생성하는데 실패하였습니다.");
         }
+    }
+
+    @GetMapping("/view/edit-photo-review/{id}")
+    public String updatePhotoReviewForm(@PathVariable("id") Long id, Model model) {
+        ResponseEntity<PhotoReviewResponseDTO> responseEntity = photoReviewClient.getReviewById(id);
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            model.addAttribute("review", responseEntity.getBody());
+            return "edit-photo-review";
+        } else {
+            throw new RuntimeException("리뷰를 수정하는데 실패하였습니다.");
+        }
+    }
+
+    @PostMapping("/view/edit-photo-review/{id}")
+    public String updatePhotoReview(
+        @PathVariable("id") Long id,
+        @Valid @ModelAttribute("review") PhotoReviewRequestDTO requestDTO,
+        @RequestPart("photoFiles") List<MultipartFile> photoFiles) {
+
+        List<String> photoUrls = photoFiles.stream()
+            .map(this::saveFileAndGetUrl)
+            .collect(Collectors.toList());
+
+        requestDTO.setPhotoUrls(photoUrls);
+
+        ResponseEntity<PhotoReviewResponseDTO> responseEntity = photoReviewClient.updateReview(id,
+            requestDTO);
+
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            return "redirect:/view/photo-reviews";
+        } else {
+            throw new RuntimeException("리뷰를 수정하는데 실패하였습니다.");
+        }
+    }
+
+    // 여기서부터 사진없는 리뷰
+
+    @GetMapping("/view/no-photo-reviews")
+    public String getNoPhotoReviews(Model model) {
+        ResponseEntity<List<NoPhotoReviewResponseDTO>> responseEntity = noPhotoReviewClient.getAllReviews();
+        List<NoPhotoReviewResponseDTO> reviews = responseEntity.getBody();
+        model.addAttribute("reviews", reviews);
+        return "no-photo-reviews";
     }
 
     @GetMapping("/view/add-no-photo-review")
@@ -104,17 +124,44 @@ public class WebController {
 
     @PostMapping("/view/add-no-photo-review")
     public String createNoPhotoReview(
-        @Valid @ModelAttribute("review") NoPhotoReviewRequestDTO requestDTO) {
+        @Validated @ModelAttribute("review") NoPhotoReviewRequestDTO requestDTO) {
+        ResponseEntity<NoPhotoReviewResponseDTO> responseEntity = noPhotoReviewClient.createReview(
+            requestDTO);
 
-        ResponseEntity<NoPhotoReviewResponseDTO> responseEntity = restTemplate.postForEntity(
-            noPhotoReviewApiUrl, requestDTO, NoPhotoReviewResponseDTO.class);
-
-        if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
             return "redirect:/view/no-photo-reviews";
         } else {
-            throw new RuntimeException("Failed to create review");
+            throw new RuntimeException("리뷰를 생성하는데 실패하였습니다.");
         }
     }
+
+    @GetMapping("/view/edit-no-photo-review/{id}")
+    public String updateNoPhotoReviewForm(@PathVariable("id") Long id, Model model) {
+        ResponseEntity<NoPhotoReviewResponseDTO> responseEntity = noPhotoReviewClient.getReviewById(
+            id);
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            model.addAttribute("review", responseEntity.getBody());
+            return "edit-no-photo-review";
+        } else {
+            throw new RuntimeException("리뷰를 수정하는데 실패하였습니다.");
+        }
+    }
+
+    @PostMapping("/view/edit-no-photo-review/{id}")
+    public String updateNoPhotoReview(
+        @PathVariable("id") Long id,
+        @Valid @ModelAttribute("review") NoPhotoReviewRequestDTO requestDTO) {
+
+        ResponseEntity<NoPhotoReviewResponseDTO> responseEntity = noPhotoReviewClient.updateReview(
+            id, requestDTO);
+
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            return "redirect:/view/no-photo-reviews";
+        } else {
+            throw new RuntimeException("리뷰를 수정하는데 실패하였습니다.");
+        }
+    }
+
 
     private String saveFileAndGetUrl(MultipartFile file) {
         // 프로젝트 루트 디렉토리 내의 static/uploads 디렉토리에 저장
@@ -137,3 +184,4 @@ public class WebController {
     }
 
 }
+

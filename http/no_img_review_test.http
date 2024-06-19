@@ -20,7 +20,7 @@ GET localhost:8080/no-photo-reviews
 
 ### 사진없는리뷰 수정
 
-PUT http://localhost:8080/no-photo-reviews/1222
+PUT http://localhost:8080/no-photo-reviews/1
 Content-Type: application/json
 
 {

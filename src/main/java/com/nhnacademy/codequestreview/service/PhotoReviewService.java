@@ -51,8 +51,6 @@ public class PhotoReviewService {
         photoReview.setScore(requestDTO.getScore());
         photoReview.setContent(requestDTO.getContent());
         photoReview.setLastModifyDate(LocalDateTime.now());
-        photoReview.setClientId(requestDTO.getClientId());
-        photoReview.setOrderDetailId(requestDTO.getOrderDetailId());
 
         List<PhotoReviewImage> newImages = requestDTO.getPhotoUrls().stream()
             .map(url -> new PhotoReviewImage(photoReview, url))
