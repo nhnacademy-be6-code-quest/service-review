@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class PhotoReviewService {
-    private final int DEFAULT_POINT = 500;
+    private static final int DEFAULT_POINT = 500;
     private final PhotoReviewRepository photoReviewRepository;
     private final PhotoReviewImageRepository photoReviewImageRepository;
 
