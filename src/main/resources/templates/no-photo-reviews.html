@@ -1,31 +1,62 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>No Photo Reviews</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .review-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .review-content {
+            flex: 1;
+            padding-right: 20px;
+        }
+        .stars {
+            color: gold;
+        }
+        .expanded-review {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
 <body>
-<h1>No Photo Reviews</h1>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Score</th>
-        <th>Content</th>
-        <th>Register Date</th>
-        <th>Last Modify Date</th>
-        <th>Point</th>
-        <th>Client ID</th>
-        <th>Order Detail ID</th>
-    </tr>
-    <tr th:each="review : ${reviews}">
-        <td th:text="${review.id}"></td>
-        <td th:text="${review.score}"></td>
-        <td th:text="${review.content}"></td>
-        <td th:text="${#temporals.format(review.registerDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-        <td th:text="${review.lastModifyDate != null ? #temporals.format(review.lastModifyDate, 'yyyy-MM-dd HH:mm:ss') : 'N/A'}"></td>
-        <td th:text="${review.point}"></td>
-        <td th:text="${review.clientId}"></td>
-        <td th:text="${review.orderDetailId}"></td>
-    </tr>
-</table>
+<div class="container">
+    <h1>No Photo Reviews</h1>
+    <div th:each="review : ${reviews}" class="review-container">
+        <div class="review-content">
+            <div class="stars" th:attr="data-score=${review.score}"></div>
+            <p>리뷰평: <span th:text="${review.content}"></span></p>
+            <p>작성일: <span th:text="${#temporals.format(review.registerDate, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+            <p th:if="${review.lastModifyDate != null}">수정일: <span th:text="${#temporals.format(review.lastModifyDate, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+            <p th:if="${review.lastModifyDate == null}">수정일:</p>
+            <p>클라이언트 ID: <span th:text="${review.clientId}"></span></p>
+            <p>주문 상세 ID: <span th:text="${review.orderDetailId}"></span></p>
+            <p>포인트: <span th:text="${review.point}"></span></p>
+        </div>
+        <div class="expanded-review" style="display: none;">
+            <!-- 여기에 확장된 리뷰에 표시할 추가 정보가 있으면 넣을 수 있습니다. -->
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".stars").forEach(function(starContainer) {
+            const score = parseInt(starContainer.getAttribute("data-score"), 10);
+            starContainer.innerHTML = '★'.repeat(score);
+        });
+    });
+</script>
 </body>
 </html>

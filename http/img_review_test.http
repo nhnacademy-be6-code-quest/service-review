@@ -31,7 +31,9 @@ Content-Type: application/json
   "orderDetailId": 1,
   "photoUrls": [
     "http://localhost:8080/img/sample_images_00.png",
-    "http://localhost:8080/img/sample_images_01.png"
+    "http://localhost:8080/img/sample_images_01.png",
+    "http://localhost:8080/img/sample_images_02.png",
+    "http://localhost:8080/img/sample_images_03.png"
   ]
 }
 
