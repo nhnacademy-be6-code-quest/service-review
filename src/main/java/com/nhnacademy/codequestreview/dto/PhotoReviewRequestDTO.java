@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 public class PhotoReviewRequestDTO {
+
     @Min(1)
     @Max(5)
     @NotNull(message = "평가점수는 필수 입력 항목입니다.")

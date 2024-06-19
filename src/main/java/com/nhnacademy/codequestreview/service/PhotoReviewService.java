@@ -5,8 +5,10 @@ import com.nhnacademy.codequestreview.dto.PhotoReviewRequestDTO;
 import com.nhnacademy.codequestreview.dto.PhotoReviewResponseDTO;
 import com.nhnacademy.codequestreview.entity.PhotoReview;
 import com.nhnacademy.codequestreview.entity.PhotoReviewImage;
+import com.nhnacademy.codequestreview.exception.ReviewNotFoundException;
 import com.nhnacademy.codequestreview.repository.PhotoReviewRepository;
 import com.nhnacademy.codequestreview.repository.PhotoReviewImageRepository;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class PhotoReviewService {
+
     private static final int DEFAULT_POINT = 500;
     private final PhotoReviewRepository photoReviewRepository;
     private final PhotoReviewImageRepository photoReviewImageRepository;
@@ -36,14 +39,14 @@ public class PhotoReviewService {
 
     public List<PhotoReviewResponseDTO> getAllReviews() {
         return photoReviewRepository.findAll().stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toList());
+            .map(this::toResponseDTO)
+            .collect(Collectors.toList());
     }
 
     @Transactional
     public PhotoReviewResponseDTO updateReview(Long id, PhotoReviewRequestDTO requestDTO) {
         PhotoReview photoReview = photoReviewRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없습니다."));
+            .orElseThrow(() -> new ReviewNotFoundException("리뷰를 찾을 수 없습니다. ID : " + id));
 
         photoReview.setScore(requestDTO.getScore());
         photoReview.setContent(requestDTO.getContent());
@@ -52,8 +55,8 @@ public class PhotoReviewService {
         photoReview.setOrderDetailId(requestDTO.getOrderDetailId());
 
         List<PhotoReviewImage> newImages = requestDTO.getPhotoUrls().stream()
-                .map(url -> new PhotoReviewImage(photoReview, url))
-                .collect(Collectors.toList());
+            .map(url -> new PhotoReviewImage(photoReview, url))
+            .collect(Collectors.toList());
 
         photoReviewImageRepository.deleteAll(photoReview.getPhotoReviewImages());
         photoReviewImageRepository.saveAll(newImages);
@@ -65,6 +68,9 @@ public class PhotoReviewService {
 
     @Transactional
     public void deleteReview(Long id) {
+        if (!photoReviewRepository.existsById(id)) {
+            throw new ReviewNotFoundException("리뷰를 찾을 수 없습니다. ID : " + id);
+        }
         photoReviewRepository.deleteById(id);
     }
 
@@ -78,8 +84,8 @@ public class PhotoReviewService {
         photoReview.setOrderDetailId(dto.getOrderDetailId());
 
         List<PhotoReviewImage> images = dto.getPhotoUrls().stream()
-                .map(url -> new PhotoReviewImage(photoReview, url))
-                .collect(Collectors.toList());
+            .map(url -> new PhotoReviewImage(photoReview, url))
+            .collect(Collectors.toList());
 
         photoReview.setPhotoReviewImages(images);
 
@@ -97,8 +103,8 @@ public class PhotoReviewService {
         dto.setClientId(photoReview.getClientId());
         dto.setOrderDetailId(photoReview.getOrderDetailId());
         dto.setPhotoUrls(photoReview.getPhotoReviewImages().stream()
-                .map(PhotoReviewImage::getPhotoUrl)
-                .collect(Collectors.toList()));
+            .map(PhotoReviewImage::getPhotoUrl)
+            .collect(Collectors.toList()));
         return dto;
     }
 }

@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "photo_review")
 public class PhotoReview {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "photo_review_id")

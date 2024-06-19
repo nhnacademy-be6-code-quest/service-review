@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class NoPhotoReviewResponseDTO {
+
     private Long id;
     private byte score;
     private String content;

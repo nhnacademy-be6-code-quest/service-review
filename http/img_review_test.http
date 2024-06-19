@@ -21,7 +21,7 @@ GET http://localhost:8080/photo-reviews
 Content-Type: application/json
 
 ### 사진있는리뷰 수정
-PUT http://localhost:8080/photo-reviews/1
+PUT http://localhost:8080/photo-reviews/1211
 Content-Type: application/json
 
 {
@@ -38,6 +38,6 @@ Content-Type: application/json
 }
 
 ### 사진있는리뷰 삭제
-DELETE http://localhost:8080/photo-reviews/1
+DELETE http://localhost:8080/photo-reviews/1000
 Content-Type: application/json
 

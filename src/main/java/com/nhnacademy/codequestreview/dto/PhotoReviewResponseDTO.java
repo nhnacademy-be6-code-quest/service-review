@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 public class PhotoReviewResponseDTO {
+
     private Long id;
     private byte score;
     private String content;

@@ -4,6 +4,7 @@ package com.nhnacademy.codequestreview.service;
 import com.nhnacademy.codequestreview.dto.NoPhotoReviewRequestDTO;
 import com.nhnacademy.codequestreview.dto.NoPhotoReviewResponseDTO;
 import com.nhnacademy.codequestreview.entity.NoPhotoReview;
+import com.nhnacademy.codequestreview.exception.ReviewNotFoundException;
 import com.nhnacademy.codequestreview.repository.NoPhotoReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class NoPhotoReviewService {
+
     private static final int DEFAULT_POINT = 200;
     private final NoPhotoReviewRepository noPhotoReviewRepository;
 
@@ -33,14 +35,15 @@ public class NoPhotoReviewService {
 
     public List<NoPhotoReviewResponseDTO> getAllReviews() {
         return noPhotoReviewRepository.findAll().stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toList());
+            .map(this::toResponseDTO)
+            .collect(Collectors.toList());
     }
 
     @Transactional
-    public NoPhotoReviewResponseDTO updateReview(Long id, NoPhotoReviewRequestDTO noPhotoReviewRequestDTO) {
+    public NoPhotoReviewResponseDTO updateReview(Long id,
+        NoPhotoReviewRequestDTO noPhotoReviewRequestDTO) {
         NoPhotoReview noPhotoReview = noPhotoReviewRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없습니다."));
+            .orElseThrow(() -> new ReviewNotFoundException("리뷰를 찾을 수 없습니다. ID: " + id));
 
         noPhotoReview.setScore(noPhotoReviewRequestDTO.getScore());
         noPhotoReview.setContent(noPhotoReviewRequestDTO.getContent());
@@ -54,6 +57,9 @@ public class NoPhotoReviewService {
 
     @Transactional
     public void deleteReview(Long id) {
+        if (!noPhotoReviewRepository.existsById(id)) {
+            throw new ReviewNotFoundException("리뷰를 찾을 수 없습니다. ID : " + id);
+        }
         noPhotoReviewRepository.deleteById(id);
     }
 

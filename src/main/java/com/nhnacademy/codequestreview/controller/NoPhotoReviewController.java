@@ -3,6 +3,7 @@ package com.nhnacademy.codequestreview.controller;
 
 import com.nhnacademy.codequestreview.dto.NoPhotoReviewRequestDTO;
 import com.nhnacademy.codequestreview.dto.NoPhotoReviewResponseDTO;
+import com.nhnacademy.codequestreview.exception.ReviewNotFoundException;
 import com.nhnacademy.codequestreview.service.NoPhotoReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,18 +17,21 @@ import java.util.List;
 @RequestMapping("/no-photo-reviews")
 @RequiredArgsConstructor
 public class NoPhotoReviewController {
+
     private final NoPhotoReviewService noPhotoReviewService;
 
     @PostMapping
-    public ResponseEntity<NoPhotoReviewResponseDTO> createReview(@Valid @RequestBody NoPhotoReviewRequestDTO noPhotoReviewRequestDTO) {
-        return new ResponseEntity<>(noPhotoReviewService.createReview(noPhotoReviewRequestDTO), HttpStatus.CREATED);
+    public ResponseEntity<NoPhotoReviewResponseDTO> createReview(
+        @Valid @RequestBody NoPhotoReviewRequestDTO noPhotoReviewRequestDTO) {
+        return new ResponseEntity<>(noPhotoReviewService.createReview(noPhotoReviewRequestDTO),
+            HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<NoPhotoReviewResponseDTO> getReviewById(@PathVariable Long id) {
         return noPhotoReviewService.getReviewById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
@@ -36,13 +40,27 @@ public class NoPhotoReviewController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<NoPhotoReviewResponseDTO> updateReview(@PathVariable Long id, @RequestBody NoPhotoReviewRequestDTO noPhotoReviewRequestDTO) {
-        return ResponseEntity.ok(noPhotoReviewService.updateReview(id, noPhotoReviewRequestDTO));
+    public ResponseEntity<NoPhotoReviewResponseDTO> updateReview(@PathVariable Long id,
+        @Valid @RequestBody NoPhotoReviewRequestDTO noPhotoReviewRequestDTO) {
+        //return ResponseEntity.ok(noPhotoReviewService.updateReview(id, noPhotoReviewRequestDTO));
+        try {
+            NoPhotoReviewResponseDTO updatedReview = noPhotoReviewService.updateReview(id,
+                noPhotoReviewRequestDTO);
+            return ResponseEntity.ok(updatedReview);
+        } catch (ReviewNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
-        noPhotoReviewService.deleteReview(id);
-        return ResponseEntity.noContent().build();
+        try {
+            noPhotoReviewService.deleteReview(id);
+            return ResponseEntity.noContent().build();
+        } catch (ReviewNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 }

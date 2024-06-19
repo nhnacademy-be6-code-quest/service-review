@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class NoPhotoReviewRequestDTO {
+
     @Min(1)
     @Max(5)
     @NotNull(message = "평가점수는 필수 입력 항목입니다.")
