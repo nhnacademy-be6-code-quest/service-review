@@ -1,7 +1,9 @@
 package com.nhnacademy.codequestreview.entity;
 
+
 import jakarta.persistence.*;
 import lombok.*;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,9 +23,8 @@ public class PhotoReviewImage {
     @Column(name = "photo_url", nullable = false)
     private String photoUrl;
 
-    public PhotoReviewImage(PhotoReview photoReview, String url) {
+    public PhotoReviewImage(PhotoReview photoReview, String photoUrl) {
         this.photoReview = photoReview;
-        this.photoUrl = url;
+        this.photoUrl = photoUrl;
     }
-
 }

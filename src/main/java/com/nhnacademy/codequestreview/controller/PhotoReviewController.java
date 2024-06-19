@@ -1,5 +1,6 @@
 package com.nhnacademy.codequestreview.controller;
 
+
 import com.nhnacademy.codequestreview.dto.PhotoReviewRequestDTO;
 import com.nhnacademy.codequestreview.dto.PhotoReviewResponseDTO;
 import com.nhnacademy.codequestreview.service.PhotoReviewService;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/photo-reviews")

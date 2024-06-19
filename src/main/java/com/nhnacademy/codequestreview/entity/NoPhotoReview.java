@@ -1,8 +1,10 @@
 package com.nhnacademy.codequestreview.entity;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+
 
 @NoArgsConstructor
 @AllArgsConstructor

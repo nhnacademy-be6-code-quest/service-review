@@ -1,10 +1,12 @@
 package com.nhnacademy.codequestreview.entity;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,5 +42,4 @@ public class PhotoReview {
 
     @OneToMany(mappedBy = "photoReview", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<PhotoReviewImage> photoReviewImages = new ArrayList<>();
-
 }
