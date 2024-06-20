@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(PhotoReviewController.class)
-public class PhotoReviewControllerTests {
+class PhotoReviewControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -42,6 +42,7 @@ public class PhotoReviewControllerTests {
         photoReviewRequestDTO.setContent("Great");
         photoReviewRequestDTO.setClientId(1L);
         photoReviewRequestDTO.setOrderDetailId(1L);
+        photoReviewRequestDTO.setProductId(1L);
         photoReviewRequestDTO.setPhotoUrls(Arrays.asList("url1", "url2"));
 
         photoReviewResponseDTO = new PhotoReviewResponseDTO();
@@ -53,6 +54,7 @@ public class PhotoReviewControllerTests {
         photoReviewResponseDTO.setPoint(500);
         photoReviewResponseDTO.setClientId(1L);
         photoReviewResponseDTO.setOrderDetailId(1L);
+        photoReviewResponseDTO.setProductId(1L);
         photoReviewResponseDTO.setPhotoUrls(Arrays.asList("url1", "url2"));
     }
 

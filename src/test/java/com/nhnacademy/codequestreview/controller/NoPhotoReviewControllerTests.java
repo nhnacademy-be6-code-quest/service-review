@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(NoPhotoReviewController.class)
-public class NoPhotoReviewControllerTests {
+class NoPhotoReviewControllerTests {
     @Autowired
     private MockMvc mockMvc;
 
@@ -44,6 +44,7 @@ public class NoPhotoReviewControllerTests {
         noPhotoReviewRequestDTO.setContent("Great!");
         noPhotoReviewRequestDTO.setClientId(12345L);
         noPhotoReviewRequestDTO.setOrderDetailId(67890L);
+        noPhotoReviewRequestDTO.setProductId(12345L);
 
         noPhotoReviewResponseDTO = new NoPhotoReviewResponseDTO();
         noPhotoReviewResponseDTO.setId(1L);
@@ -51,6 +52,7 @@ public class NoPhotoReviewControllerTests {
         noPhotoReviewResponseDTO.setContent("Great!");
         noPhotoReviewResponseDTO.setClientId(12345L);
         noPhotoReviewResponseDTO.setOrderDetailId(67890L);
+        noPhotoReviewResponseDTO.setProductId(12345L);
         noPhotoReviewResponseDTO.setRegisterDate(LocalDateTime.now());
         noPhotoReviewResponseDTO.setLastModifyDate(LocalDateTime.now());
         noPhotoReviewResponseDTO.setPoint(200);
