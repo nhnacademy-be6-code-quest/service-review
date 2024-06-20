@@ -1,12 +1,15 @@
-package com.nhnacademy.codequestreview.controller.webviewcontroller;
+package com.nhnacademy.codequestreview.controller.web;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nhnacademy.codequestreview.client.NoPhotoReviewClient;
-import com.nhnacademy.codequestreview.client.PhotoReviewClient;
 import com.nhnacademy.codequestreview.dto.PhotoReviewRequestDTO;
 import com.nhnacademy.codequestreview.dto.PhotoReviewResponseDTO;
+import com.nhnacademy.codequestreview.exception.FileSaveException;
+import com.nhnacademy.codequestreview.exception.ReviewCreationException;
+import com.nhnacademy.codequestreview.exception.ReviewPhotoProcessingException;
+import com.nhnacademy.codequestreview.exception.ReviewUpdateException;
+import com.nhnacademy.codequestreview.service.web.WebPhotoReviewService;
 import jakarta.validation.Valid;
 import java.io.File;
 import java.io.IOException;
@@ -31,13 +34,12 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class WebPhotoReviewController {
 
-    private final PhotoReviewClient photoReviewClient;
-    private final NoPhotoReviewClient noPhotoReviewClient;
+    private final WebPhotoReviewService photoReviewService;
 
 
     @GetMapping("/view/photo-reviews")
     public String getPhotoReviews(Model model) {
-        ResponseEntity<List<PhotoReviewResponseDTO>> responseEntity = photoReviewClient.getAllReviews();
+        ResponseEntity<List<PhotoReviewResponseDTO>> responseEntity = photoReviewService.getAllReviews();
         List<PhotoReviewResponseDTO> reviews = responseEntity.getBody();
         model.addAttribute("reviews", reviews);
         return "photo-reviews";
@@ -61,24 +63,24 @@ public class WebPhotoReviewController {
 
         requestDTO.setPhotoUrls(photoUrls);
 
-        ResponseEntity<PhotoReviewResponseDTO> responseEntity = photoReviewClient.createReview(
+        ResponseEntity<PhotoReviewResponseDTO> responseEntity = photoReviewService.createReview(
             requestDTO);
 
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             return "redirect:/view/photo-reviews";
         } else {
-            throw new RuntimeException("리뷰를 생성하는데 실패하였습니다.");
+            throw new ReviewCreationException("리뷰를 생성하는데 실패하였습니다.");
         }
     }
 
     @GetMapping("/view/edit-photo-review/{id}")
     public String updatePhotoReviewForm(@PathVariable("id") Long id, Model model) {
-        ResponseEntity<PhotoReviewResponseDTO> responseEntity = photoReviewClient.getReviewById(id);
+        ResponseEntity<PhotoReviewResponseDTO> responseEntity = photoReviewService.getReviewById(id);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             model.addAttribute("review", responseEntity.getBody());
             return "edit-photo-review";
         } else {
-            throw new RuntimeException("리뷰를 수정하는데 실패하였습니다.");
+            throw new ReviewUpdateException("리뷰를 수정하는데 실패하였습니다.");
         }
     }
 
@@ -108,16 +110,16 @@ public class WebPhotoReviewController {
 
             requestDTO.setPhotoUrls(photoUrls);
 
-            ResponseEntity<PhotoReviewResponseDTO> responseEntity = photoReviewClient.updateReview(
+            ResponseEntity<PhotoReviewResponseDTO> responseEntity = photoReviewService.updateReview(
                 id, requestDTO);
 
             if (responseEntity.getStatusCode() == HttpStatus.OK) {
                 return "redirect:/view/photo-reviews";
             } else {
-                throw new RuntimeException("리뷰를 수정하는데 실패하였습니다.");
+                throw new ReviewUpdateException("리뷰를 수정하는데 실패하였습니다.");
             }
         } catch (IOException e) {
-            throw new RuntimeException("기존 사진 URL을 처리하는데 실패하였습니다.", e);
+            throw new ReviewPhotoProcessingException("기존 사진 URL을 처리하는데 실패하였습니다.", e);
         }
     }
 
@@ -137,7 +139,7 @@ public class WebPhotoReviewController {
             file.transferTo(savedFile);
             return "/uploads/" + filename;
         } catch (IOException e) {
-            throw new RuntimeException("파일 저장 중 오류가 발생했습니다.", e);
+            throw new FileSaveException("파일 저장 중 오류가 발생했습니다.", e);
         }
     }
 

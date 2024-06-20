@@ -7,6 +7,8 @@ import com.nhnacademy.codequestreview.exception.ReviewNotFoundException;
 import com.nhnacademy.codequestreview.service.NoPhotoReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,9 +36,14 @@ public class NoPhotoReviewController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+//    @GetMapping
+//    public ResponseEntity<List<NoPhotoReviewResponseDTO>> getAllReviews() {
+//        return ResponseEntity.ok(noPhotoReviewService.getAllReviews());
+//    }
+
     @GetMapping
-    public ResponseEntity<List<NoPhotoReviewResponseDTO>> getAllReviews() {
-        return ResponseEntity.ok(noPhotoReviewService.getAllReviews());
+    public ResponseEntity<Page<NoPhotoReviewResponseDTO>> getAllReviews(Pageable pageable) {
+        return ResponseEntity.ok(noPhotoReviewService.getAllReviews(pageable));
     }
 
     @PutMapping("/{id}")

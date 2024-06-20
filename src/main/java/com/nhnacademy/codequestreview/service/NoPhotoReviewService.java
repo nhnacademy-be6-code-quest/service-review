@@ -7,6 +7,8 @@ import com.nhnacademy.codequestreview.entity.NoPhotoReview;
 import com.nhnacademy.codequestreview.exception.ReviewNotFoundException;
 import com.nhnacademy.codequestreview.repository.NoPhotoReviewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -33,11 +35,18 @@ public class NoPhotoReviewService {
         return noPhotoReviewRepository.findById(id).map(this::toResponseDTO);
     }
 
-    public List<NoPhotoReviewResponseDTO> getAllReviews() {
-        return noPhotoReviewRepository.findAll().stream()
-            .map(this::toResponseDTO)
-            .collect(Collectors.toList());
+//    public List<NoPhotoReviewResponseDTO> getAllReviews() {
+//        return noPhotoReviewRepository.findAll().stream()
+//            .map(this::toResponseDTO)
+//            .collect(Collectors.toList());
+//    }
+
+
+    public Page<NoPhotoReviewResponseDTO> getAllReviews(Pageable pageable) {
+        return noPhotoReviewRepository.findAll(pageable)
+            .map(this::toResponseDTO);
     }
+
 
     @Transactional
     public NoPhotoReviewResponseDTO updateReview(Long id,
