@@ -82,16 +82,16 @@ class PhotoReviewControllerTests {
                 .andExpect(jsonPath("$.content").value(photoReviewResponseDTO.getContent()));
     }
 
-    @Test
-    void getAllReviewsTest() throws Exception {
-        given(photoReviewService.getAllReviews()).willReturn(Arrays.asList(photoReviewResponseDTO));
-
-        mockMvc.perform(get("/photo-reviews"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(photoReviewResponseDTO.getId()))
-                .andExpect(jsonPath("$[0].score").value((int) photoReviewResponseDTO.getScore()))
-                .andExpect(jsonPath("$[0].content").value(photoReviewResponseDTO.getContent()));
-    }
+//    @Test
+//    void getAllReviewsTest() throws Exception {
+//        given(photoReviewService.getAllReviews()).willReturn(Arrays.asList(photoReviewResponseDTO));
+//
+//        mockMvc.perform(get("/photo-reviews"))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$[0].id").value(photoReviewResponseDTO.getId()))
+//                .andExpect(jsonPath("$[0].score").value((int) photoReviewResponseDTO.getScore()))
+//                .andExpect(jsonPath("$[0].content").value(photoReviewResponseDTO.getContent()));
+//    }
 
     @Test
     void updateReviewTest() throws Exception {

@@ -3,8 +3,9 @@ package com.nhnacademy.codequestreview.service.web;
 import com.nhnacademy.codequestreview.client.PhotoReviewClient;
 import com.nhnacademy.codequestreview.dto.PhotoReviewRequestDTO;
 import com.nhnacademy.codequestreview.dto.PhotoReviewResponseDTO;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -15,23 +16,34 @@ public class WebPhotoReviewService {
 
     private final PhotoReviewClient photoReviewClient;
 
-    public ResponseEntity<PhotoReviewResponseDTO> createReview(PhotoReviewRequestDTO requestDTO){
+    public ResponseEntity<PhotoReviewResponseDTO> createReview(PhotoReviewRequestDTO requestDTO) {
         return photoReviewClient.createReview(requestDTO);
     }
 
-    public ResponseEntity<PhotoReviewResponseDTO> getReviewById(Long id){
+    public ResponseEntity<PhotoReviewResponseDTO> getReviewById(Long id) {
         return photoReviewClient.getReviewById(id);
     }
 
-    public ResponseEntity<List<PhotoReviewResponseDTO>> getAllReviews(){
-        return photoReviewClient.getAllReviews();
+    public ResponseEntity<Page<PhotoReviewResponseDTO>> getAllReviews(Pageable pageable) {
+        return photoReviewClient.getAllReviews(pageable);
     }
 
-    public ResponseEntity<PhotoReviewResponseDTO> updateReview(Long id, PhotoReviewRequestDTO requestDTO){
+    public ResponseEntity<Page<PhotoReviewResponseDTO>> getAllReviewsByClientId(Long clientId,
+        Pageable pageable) {
+        return photoReviewClient.getAllReviewsByClientId(clientId, pageable);
+    }
+
+    public ResponseEntity<Page<PhotoReviewResponseDTO>> getAllReviewsByProductId(Long productId,
+        Pageable pageable) {
+        return photoReviewClient.getAllReviewsByProductId(productId, pageable);
+    }
+
+    public ResponseEntity<PhotoReviewResponseDTO> updateReview(Long id,
+        PhotoReviewRequestDTO requestDTO) {
         return photoReviewClient.updateReview(id, requestDTO);
     }
 
-    public ResponseEntity<Void> deleteReview(Long id){
+    public ResponseEntity<Void> deleteReview(Long id) {
         return photoReviewClient.deleteReview(id);
     }
 

@@ -18,6 +18,14 @@ GET http://localhost:8080/no-photo-reviews/1
 
 GET localhost:8080/no-photo-reviews
 
+### 사진없는리뷰 전체조회(유저아이디)
+
+GET localhost:8007/no-photo-reviews/client/1
+
+### 사진없는리뷰 전체조회(상품아이디)
+
+GET localhost:8007/no-photo-reviews/product/1
+
 ### 사진없는리뷰 수정
 
 PUT http://localhost:8080/no-photo-reviews/1

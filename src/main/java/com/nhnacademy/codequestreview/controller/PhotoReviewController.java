@@ -7,10 +7,11 @@ import com.nhnacademy.codequestreview.exception.ReviewNotFoundException;
 import com.nhnacademy.codequestreview.service.PhotoReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 
 @RestController
@@ -35,10 +36,21 @@ public class PhotoReviewController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PhotoReviewResponseDTO>> getAllReviews() {
-        return ResponseEntity.ok(photoReviewService.getAllReviews());
+    public ResponseEntity<Page<PhotoReviewResponseDTO>> getAllReviews(Pageable pageable) {
+        return ResponseEntity.ok(photoReviewService.getAllReviews(pageable));
     }
 
+    @GetMapping("/client/{clientId}")
+    public ResponseEntity<Page<PhotoReviewResponseDTO>> getAllReviewsByClientId(
+        @PathVariable Long clientId, Pageable pageable) {
+        return ResponseEntity.ok(photoReviewService.getAllReviewsByClientId(clientId, pageable));
+    }
+
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<Page<PhotoReviewResponseDTO>> getAllReviewsByProductId(
+        @PathVariable Long productId, Pageable pageable) {
+        return ResponseEntity.ok(photoReviewService.getAllReviewsByProductId(productId, pageable));
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<PhotoReviewResponseDTO> updateReview(@PathVariable Long id,
@@ -50,7 +62,6 @@ public class PhotoReviewController {
             return ResponseEntity.notFound().build();
         }
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReview(@PathVariable Long id) {

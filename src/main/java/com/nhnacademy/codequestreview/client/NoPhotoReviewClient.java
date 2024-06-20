@@ -3,7 +3,6 @@ package com.nhnacademy.codequestreview.client;
 
 import com.nhnacademy.codequestreview.dto.NoPhotoReviewRequestDTO;
 import com.nhnacademy.codequestreview.dto.NoPhotoReviewResponseDTO;
-import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,17 +23,24 @@ public interface NoPhotoReviewClient {
         @RequestBody NoPhotoReviewRequestDTO requestDTO);
 
     @GetMapping("/{id}")
-    ResponseEntity<NoPhotoReviewResponseDTO> getReviewById(@PathVariable("id") Long id);
+    ResponseEntity<NoPhotoReviewResponseDTO> getReviewById(@PathVariable Long id);
 
     @GetMapping
-    //ResponseEntity<List<NoPhotoReviewResponseDTO>> getAllReviews();
     ResponseEntity<Page<NoPhotoReviewResponseDTO>> getAllReviews(Pageable pageable);
 
+    @GetMapping("/client/{clientId}")
+    ResponseEntity<Page<NoPhotoReviewResponseDTO>> getAllReviewsByClientId(
+        @PathVariable Long clientId, Pageable pageable);
+
+    @GetMapping("/product/{productId}")
+    ResponseEntity<Page<NoPhotoReviewResponseDTO>> getAllReviewsByProductId(
+        @PathVariable Long productId, Pageable pageable);
+
     @PutMapping("/{id}")
-    ResponseEntity<NoPhotoReviewResponseDTO> updateReview(@PathVariable("id") Long id,
+    ResponseEntity<NoPhotoReviewResponseDTO> updateReview(@PathVariable Long id,
         @RequestBody NoPhotoReviewRequestDTO requestDTO);
 
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteReview(@PathVariable("id") Long id);
+    ResponseEntity<Void> deleteReview(@PathVariable Long id);
 
 }

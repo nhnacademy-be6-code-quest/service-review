@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -19,7 +18,8 @@ public class WebNoPhotoReviewService {
     private final NoPhotoReviewClient noPhotoReviewClient;
 
 
-    public ResponseEntity<NoPhotoReviewResponseDTO> createReview(NoPhotoReviewRequestDTO requestDTO) {
+    public ResponseEntity<NoPhotoReviewResponseDTO> createReview(
+        NoPhotoReviewRequestDTO requestDTO) {
         return noPhotoReviewClient.createReview(requestDTO);
     }
 
@@ -27,15 +27,22 @@ public class WebNoPhotoReviewService {
         return noPhotoReviewClient.getReviewById(id);
     }
 
-//    public ResponseEntity<List<NoPhotoReviewResponseDTO>> getAllReviews() {
-//        return noPhotoReviewClient.getAllReviews();
-//    }
-
     public ResponseEntity<Page<NoPhotoReviewResponseDTO>> getAllReviews(Pageable pageable) {
         return noPhotoReviewClient.getAllReviews(pageable);
     }
 
-    public ResponseEntity<NoPhotoReviewResponseDTO> updateReview(Long id, NoPhotoReviewRequestDTO requestDTO) {
+    public ResponseEntity<Page<NoPhotoReviewResponseDTO>> getAllReviewsByClientId(Long clientId,
+        Pageable pageable) {
+        return noPhotoReviewClient.getAllReviewsByClientId(clientId, pageable);
+    }
+
+    public ResponseEntity<Page<NoPhotoReviewResponseDTO>> getAllReviewsByProductId(Long productId,
+        Pageable pageable) {
+        return noPhotoReviewClient.getAllReviewsByProductId(productId, pageable);
+    }
+
+    public ResponseEntity<NoPhotoReviewResponseDTO> updateReview(Long id,
+        NoPhotoReviewRequestDTO requestDTO) {
         return noPhotoReviewClient.updateReview(id, requestDTO);
     }
 

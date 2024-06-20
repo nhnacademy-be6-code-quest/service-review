@@ -9,4 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface NoPhotoReviewRepository extends JpaRepository<NoPhotoReview, Long> {
     Page<NoPhotoReview> findAll(Pageable pageable);
+
+    Page<NoPhotoReview> findAllByClientId(Long clientId, Pageable pageable);
+
+    Page<NoPhotoReview> findAllByProductId(Long productId, Pageable pageable);
 }
