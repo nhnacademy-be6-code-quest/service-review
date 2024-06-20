@@ -16,4 +16,6 @@ public class NoPhotoReviewResponseDTO {
     private int point;
     private Long clientId;
     private Long orderDetailId;
+    private Long productId;
+
 }

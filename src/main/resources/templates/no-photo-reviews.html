@@ -47,6 +47,7 @@
       <p th:if="${review.lastModifyDate == null}">수정일:</p>
       <p>클라이언트 ID: <span th:text="${review.clientId}"></span></p>
       <p>주문 상세 ID: <span th:text="${review.orderDetailId}"></span></p>
+      <p>상품 ID: <span th:text="${review.productId}"></span></p>
       <p>포인트: <span th:text="${review.point}"></span></p>
     </div>
     <button type="button" class="btn btn-primary edit-button" onclick="editReview(event)"

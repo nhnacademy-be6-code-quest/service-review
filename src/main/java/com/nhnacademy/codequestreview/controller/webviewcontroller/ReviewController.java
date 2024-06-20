@@ -1,6 +1,8 @@
-package com.nhnacademy.codequestreview.controller;
+package com.nhnacademy.codequestreview.controller.webviewcontroller;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.codequestreview.client.NoPhotoReviewClient;
 import com.nhnacademy.codequestreview.client.PhotoReviewClient;
 import com.nhnacademy.codequestreview.dto.NoPhotoReviewRequestDTO;
@@ -10,7 +12,9 @@ import com.nhnacademy.codequestreview.dto.PhotoReviewResponseDTO;
 import jakarta.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,17 +29,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+
 @Controller
 @RequiredArgsConstructor
-public class WebController {
+public class ReviewController {
 
     private final PhotoReviewClient photoReviewClient;
     private final NoPhotoReviewClient noPhotoReviewClient;
-
-    @GetMapping("/")
-    public String home() {
-        return "index";
-    }
 
 
     @GetMapping("/view/photo-reviews")
@@ -54,7 +54,8 @@ public class WebController {
 
     @PostMapping("/view/add-photo-review")
     public String createReview(
-        @Valid @ModelAttribute("review") PhotoReviewRequestDTO requestDTO,
+        @Valid
+        @ModelAttribute("review") PhotoReviewRequestDTO requestDTO,
         @RequestPart("photoFiles") List<MultipartFile> photoFiles) {
 
         List<String> photoUrls = photoFiles.stream()
@@ -88,21 +89,38 @@ public class WebController {
     public String updatePhotoReview(
         @PathVariable("id") Long id,
         @Valid @ModelAttribute("review") PhotoReviewRequestDTO requestDTO,
-        @RequestPart("photoFiles") List<MultipartFile> photoFiles) {
+        @RequestPart(value = "photoFiles", required = false) List<MultipartFile> photoFiles,
+        @RequestPart("existingPhotoUrls") String existingPhotoUrlsJson) {
 
-        List<String> photoUrls = photoFiles.stream()
-            .map(this::saveFileAndGetUrl)
-            .collect(Collectors.toList());
+        try {
+            List<String> existingPhotoUrls = new ObjectMapper().readValue(existingPhotoUrlsJson,
+                new TypeReference<List<String>>() {
+                });
+            List<String> photoUrls = new ArrayList<>();
 
-        requestDTO.setPhotoUrls(photoUrls);
+            if (photoFiles != null && !photoFiles.isEmpty()) {
+                photoUrls.addAll(photoFiles.stream()
+                    .map(this::saveFileAndGetUrl)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList()));
+            }
 
-        ResponseEntity<PhotoReviewResponseDTO> responseEntity = photoReviewClient.updateReview(id,
-            requestDTO);
+            if (existingPhotoUrls != null) {
+                photoUrls.addAll(0, existingPhotoUrls); // 기존 사진 URL을 맨 앞에 추가
+            }
 
-        if (responseEntity.getStatusCode() == HttpStatus.OK) {
-            return "redirect:/view/photo-reviews";
-        } else {
-            throw new RuntimeException("리뷰를 수정하는데 실패하였습니다.");
+            requestDTO.setPhotoUrls(photoUrls);
+
+            ResponseEntity<PhotoReviewResponseDTO> responseEntity = photoReviewClient.updateReview(
+                id, requestDTO);
+
+            if (responseEntity.getStatusCode() == HttpStatus.OK) {
+                return "redirect:/view/photo-reviews";
+            } else {
+                throw new RuntimeException("리뷰를 수정하는데 실패하였습니다.");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("기존 사진 URL을 처리하는데 실패하였습니다.", e);
         }
     }
 

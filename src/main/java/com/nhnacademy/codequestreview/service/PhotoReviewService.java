@@ -8,7 +8,6 @@ import com.nhnacademy.codequestreview.entity.PhotoReviewImage;
 import com.nhnacademy.codequestreview.exception.ReviewNotFoundException;
 import com.nhnacademy.codequestreview.repository.PhotoReviewRepository;
 import com.nhnacademy.codequestreview.repository.PhotoReviewImageRepository;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,6 +79,7 @@ public class PhotoReviewService {
         photoReview.setPoint(DEFAULT_POINT);
         photoReview.setClientId(dto.getClientId());
         photoReview.setOrderDetailId(dto.getOrderDetailId());
+        photoReview.setProductId(dto.getProductId());
 
         List<PhotoReviewImage> images = dto.getPhotoUrls().stream()
             .map(url -> new PhotoReviewImage(photoReview, url))
@@ -100,9 +100,11 @@ public class PhotoReviewService {
         dto.setPoint(photoReview.getPoint());
         dto.setClientId(photoReview.getClientId());
         dto.setOrderDetailId(photoReview.getOrderDetailId());
+        dto.setProductId(photoReview.getProductId());
         dto.setPhotoUrls(photoReview.getPhotoReviewImages().stream()
             .map(PhotoReviewImage::getPhotoUrl)
             .collect(Collectors.toList()));
         return dto;
     }
+
 }

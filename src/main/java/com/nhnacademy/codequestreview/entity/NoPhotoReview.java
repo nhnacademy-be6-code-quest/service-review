@@ -38,4 +38,8 @@ public class NoPhotoReview {
 
     @Column(name = "order_detail_id", nullable = false)
     private Long orderDetailId;
+
+    @Column(name = "product_id", nullable = false)
+    private Long productId;
+
 }

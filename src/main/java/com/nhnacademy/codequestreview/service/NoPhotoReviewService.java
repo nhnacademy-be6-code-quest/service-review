@@ -69,6 +69,7 @@ public class NoPhotoReviewService {
         noPhotoReview.setPoint(DEFAULT_POINT);
         noPhotoReview.setClientId(dto.getClientId());
         noPhotoReview.setOrderDetailId(dto.getOrderDetailId());
+        noPhotoReview.setProductId(dto.getProductId());
         return noPhotoReview;
     }
 
@@ -82,6 +83,8 @@ public class NoPhotoReviewService {
         dto.setPoint(noPhotoReview.getPoint());
         dto.setClientId(noPhotoReview.getClientId());
         dto.setOrderDetailId(noPhotoReview.getOrderDetailId());
+        dto.setProductId(noPhotoReview.getProductId());
         return dto;
     }
+
 }

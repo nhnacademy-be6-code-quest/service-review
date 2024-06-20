@@ -1,11 +1,12 @@
 package com.nhnacademy.codequestreview.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import java.util.List;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class PhotoReviewRequestDTO {
 
@@ -24,5 +25,11 @@ public class PhotoReviewRequestDTO {
     @NotNull
     private Long orderDetailId;
 
+    @NotNull
+    private Long productId;
+
     private List<String> photoUrls;
+
+    private List<String> existingPhotoUrls; // 기존 사진 URL 필드 추가
+
 }

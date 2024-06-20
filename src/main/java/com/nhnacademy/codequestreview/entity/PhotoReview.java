@@ -41,6 +41,10 @@ public class PhotoReview {
     @Column(name = "order_detail_id", nullable = false)
     private Long orderDetailId;
 
+    @Column(name = "product_id", nullable = false)
+    private Long productId;
+
     @OneToMany(mappedBy = "photoReview", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<PhotoReviewImage> photoReviewImages = new ArrayList<>();
+
 }

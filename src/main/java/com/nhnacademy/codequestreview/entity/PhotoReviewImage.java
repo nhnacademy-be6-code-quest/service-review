@@ -28,4 +28,5 @@ public class PhotoReviewImage {
         this.photoReview = photoReview;
         this.photoUrl = photoUrl;
     }
+
 }

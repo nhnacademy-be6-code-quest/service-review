@@ -1,5 +1,6 @@
 package com.nhnacademy.codequestreview.client;
 
+
 import com.nhnacademy.codequestreview.dto.PhotoReviewRequestDTO;
 import com.nhnacademy.codequestreview.dto.PhotoReviewResponseDTO;
 import java.util.List;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "photoReviewClient", url = "http://localhost:8080/photo-reviews")
+
+@FeignClient(name = "photoReviewClient", url = "http://localhost:8007/photo-reviews")
 public interface PhotoReviewClient {
 
     @PostMapping

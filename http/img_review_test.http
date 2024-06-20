@@ -1,14 +1,15 @@
 ### 사진있는리뷰 생성
-POST http://localhost:8080/photo-reviews
+POST http://localhost:8007/photo-reviews
 Content-Type: application/json
 
 {
   "score": 5,
-  "content": "테스트1테스트1테스트테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트11테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1테스트1",
+  "content": "상품아이디 추가 테스트",
   "clientId": 1,
   "orderDetailId": 1,
+  "productId": 1,
   "photoUrls": [
-    "http://localhost:8080/img/sample_images_00.png"
+    "http://localhost:8007/img/sample_images_00.png"
   ]
 }
 
