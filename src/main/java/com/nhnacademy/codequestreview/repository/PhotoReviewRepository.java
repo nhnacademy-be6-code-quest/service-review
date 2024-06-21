@@ -1,7 +1,6 @@
 package com.nhnacademy.codequestreview.repository;
 
 
-import com.nhnacademy.codequestreview.entity.NoPhotoReview;
 import com.nhnacademy.codequestreview.entity.PhotoReview;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
