@@ -1,8 +1,8 @@
 package com.nhnacademy.codequestreview.service;
 
 
-import com.nhnacademy.codequestreview.dto.PhotoReviewRequestDTO;
-import com.nhnacademy.codequestreview.dto.PhotoReviewResponseDTO;
+import com.nhnacademy.codequestreview.dto.request.PhotoReviewRequestDTO;
+import com.nhnacademy.codequestreview.dto.response.PhotoReviewResponseDTO;
 import com.nhnacademy.codequestreview.entity.PhotoReview;
 import com.nhnacademy.codequestreview.entity.PhotoReviewImage;
 import com.nhnacademy.codequestreview.exception.ReviewNotFoundException;

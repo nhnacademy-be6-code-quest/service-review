@@ -1,8 +1,8 @@
 package com.nhnacademy.codequestreview.controller;
 
 
-import com.nhnacademy.codequestreview.dto.PhotoReviewRequestDTO;
-import com.nhnacademy.codequestreview.dto.PhotoReviewResponseDTO;
+import com.nhnacademy.codequestreview.dto.request.PhotoReviewRequestDTO;
+import com.nhnacademy.codequestreview.dto.response.PhotoReviewResponseDTO;
 import com.nhnacademy.codequestreview.exception.ReviewNotFoundException;
 import com.nhnacademy.codequestreview.service.PhotoReviewService;
 import jakarta.validation.Valid;

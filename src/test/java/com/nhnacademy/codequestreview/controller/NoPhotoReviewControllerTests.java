@@ -1,8 +1,8 @@
 package com.nhnacademy.codequestreview.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nhnacademy.codequestreview.dto.NoPhotoReviewRequestDTO;
-import com.nhnacademy.codequestreview.dto.NoPhotoReviewResponseDTO;
+import com.nhnacademy.codequestreview.dto.request.NoPhotoReviewRequestDTO;
+import com.nhnacademy.codequestreview.dto.response.NoPhotoReviewResponseDTO;
 import com.nhnacademy.codequestreview.service.NoPhotoReviewService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;

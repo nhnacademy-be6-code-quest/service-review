@@ -1,8 +1,8 @@
 package com.nhnacademy.codequestreview.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nhnacademy.codequestreview.dto.PhotoReviewRequestDTO;
-import com.nhnacademy.codequestreview.dto.PhotoReviewResponseDTO;
+import com.nhnacademy.codequestreview.dto.request.PhotoReviewRequestDTO;
+import com.nhnacademy.codequestreview.dto.response.PhotoReviewResponseDTO;
 import com.nhnacademy.codequestreview.service.PhotoReviewService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

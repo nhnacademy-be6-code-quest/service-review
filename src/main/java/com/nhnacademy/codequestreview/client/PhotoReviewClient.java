@@ -1,8 +1,8 @@
 package com.nhnacademy.codequestreview.client;
 
 
-import com.nhnacademy.codequestreview.dto.PhotoReviewRequestDTO;
-import com.nhnacademy.codequestreview.dto.PhotoReviewResponseDTO;
+import com.nhnacademy.codequestreview.dto.request.PhotoReviewRequestDTO;
+import com.nhnacademy.codequestreview.dto.response.PhotoReviewResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

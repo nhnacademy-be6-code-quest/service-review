@@ -1,8 +1,8 @@
 package com.nhnacademy.codequestreview.service.web;
 
 import com.nhnacademy.codequestreview.client.PhotoReviewClient;
-import com.nhnacademy.codequestreview.dto.PhotoReviewRequestDTO;
-import com.nhnacademy.codequestreview.dto.PhotoReviewResponseDTO;
+import com.nhnacademy.codequestreview.dto.request.PhotoReviewRequestDTO;
+import com.nhnacademy.codequestreview.dto.response.PhotoReviewResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

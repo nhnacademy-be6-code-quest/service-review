@@ -3,8 +3,8 @@ package com.nhnacademy.codequestreview.controller.web;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nhnacademy.codequestreview.dto.PhotoReviewRequestDTO;
-import com.nhnacademy.codequestreview.dto.PhotoReviewResponseDTO;
+import com.nhnacademy.codequestreview.dto.request.PhotoReviewRequestDTO;
+import com.nhnacademy.codequestreview.dto.response.PhotoReviewResponseDTO;
 import com.nhnacademy.codequestreview.exception.FileSaveException;
 import com.nhnacademy.codequestreview.exception.ReviewCreationException;
 import com.nhnacademy.codequestreview.exception.ReviewPhotoProcessingException;
@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,8 @@ public class WebPhotoReviewController {
 
     @GetMapping("/view/photo-reviews")
     public String getPhotoReviews(Model model, Pageable pageable) {
-        Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), DEFAULT_PAGE_SIZE);
+        Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), DEFAULT_PAGE_SIZE, Sort.by(
+            Sort.Direction.DESC, "registerDate"));
         ResponseEntity<Page<PhotoReviewResponseDTO>> responseEntity = photoReviewService.getAllReviews(
             pageRequest);
         Page<PhotoReviewResponseDTO> reviews = responseEntity.getBody();
@@ -54,7 +56,8 @@ public class WebPhotoReviewController {
     @GetMapping("/view/photo-reviews/client/{clientId}")
     public String getPhotoReviewsByClientId(@PathVariable Long clientId, Model model,
         Pageable pageable) {
-        Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), DEFAULT_PAGE_SIZE);
+        Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), DEFAULT_PAGE_SIZE, Sort.by(
+            Sort.Direction.DESC, "registerDate"));
         ResponseEntity<Page<PhotoReviewResponseDTO>> responseEntity = photoReviewService.getAllReviewsByClientId(
             clientId, pageRequest);
         Page<PhotoReviewResponseDTO> reviews = responseEntity.getBody();
@@ -66,7 +69,8 @@ public class WebPhotoReviewController {
     @GetMapping("/view/photo-reviews/product/{productId}")
     public String getPhotoReviewsByProductId(@PathVariable Long productId, Model model,
         Pageable pageable) {
-        Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), DEFAULT_PAGE_SIZE);
+        Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), DEFAULT_PAGE_SIZE, Sort.by(
+            Sort.Direction.DESC, "registerDate"));
         ResponseEntity<Page<PhotoReviewResponseDTO>> responseEntity = photoReviewService.getAllReviewsByProductId(
             productId, pageRequest);
         Page<PhotoReviewResponseDTO> reviews = responseEntity.getBody();
