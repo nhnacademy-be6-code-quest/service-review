@@ -14,4 +14,6 @@ public interface PhotoReviewRepository extends JpaRepository<PhotoReview, Long> 
     Page<PhotoReview> findAllByClientId(Long clientId, Pageable pageable);
 
     Page<PhotoReview> findAllByProductId(Long productId, Pageable pageable);
+
+    boolean existsByOrderDetailId(Long orderDetailId);
 }

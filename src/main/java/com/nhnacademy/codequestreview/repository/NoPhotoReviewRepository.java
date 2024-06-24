@@ -13,4 +13,6 @@ public interface NoPhotoReviewRepository extends JpaRepository<NoPhotoReview, Lo
     Page<NoPhotoReview> findAllByClientId(Long clientId, Pageable pageable);
 
     Page<NoPhotoReview> findAllByProductId(Long productId, Pageable pageable);
+
+    boolean existsByOrderDetailId(Long orderDetailId);
 }

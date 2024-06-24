@@ -7,6 +7,7 @@ import com.nhnacademy.codequestreview.entity.PhotoReview;
 import com.nhnacademy.codequestreview.exception.ReviewNotFoundException;
 import com.nhnacademy.codequestreview.repository.PhotoReviewRepository;
 import com.nhnacademy.codequestreview.repository.PhotoReviewImageRepository;
+import com.nhnacademy.codequestreview.service.imp.PhotoReviewServiceImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -35,7 +36,7 @@ class PhotoReviewServiceTest {
     private PhotoReviewImageRepository photoReviewImageRepository;
 
     @InjectMocks
-    private PhotoReviewService photoReviewService;
+    private PhotoReviewServiceImp photoReviewService;
 
     @BeforeEach
     public void setUp() {

@@ -4,7 +4,7 @@ package com.nhnacademy.codequestreview.controller;
 import com.nhnacademy.codequestreview.dto.request.NoPhotoReviewRequestDTO;
 import com.nhnacademy.codequestreview.dto.response.NoPhotoReviewResponseDTO;
 import com.nhnacademy.codequestreview.exception.ReviewNotFoundException;
-import com.nhnacademy.codequestreview.service.NoPhotoReviewService;
+import com.nhnacademy.codequestreview.service.imp.NoPhotoReviewServiceImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -38,7 +38,7 @@ class NoPhotoReviewControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private NoPhotoReviewService noPhotoReviewService;
+    private NoPhotoReviewServiceImp noPhotoReviewService;
 
     @Autowired
     private ObjectMapper objectMapper;
