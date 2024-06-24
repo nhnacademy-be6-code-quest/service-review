@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.codequestreview.dto.request.PhotoReviewRequestDTO;
 import com.nhnacademy.codequestreview.dto.response.PhotoReviewResponseDTO;
 import com.nhnacademy.codequestreview.exception.ReviewNotFoundException;
-import com.nhnacademy.codequestreview.service.PhotoReviewService;
+import com.nhnacademy.codequestreview.service.imp.PhotoReviewServiceImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -39,7 +39,7 @@ class PhotoReviewControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private PhotoReviewService photoReviewService;
+    private PhotoReviewServiceImp photoReviewService;
 
     @Autowired
     private ObjectMapper objectMapper;

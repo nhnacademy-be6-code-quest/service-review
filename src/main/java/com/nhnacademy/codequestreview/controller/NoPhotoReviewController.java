@@ -4,7 +4,7 @@ package com.nhnacademy.codequestreview.controller;
 import com.nhnacademy.codequestreview.dto.request.NoPhotoReviewRequestDTO;
 import com.nhnacademy.codequestreview.dto.response.NoPhotoReviewResponseDTO;
 import com.nhnacademy.codequestreview.exception.ReviewNotFoundException;
-import com.nhnacademy.codequestreview.service.NoPhotoReviewService;
+import com.nhnacademy.codequestreview.service.imp.NoPhotoReviewServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "NoPhotoReview API", description = "NoPhotoReview API 입니다.")
 public class NoPhotoReviewController {
 
-    private final NoPhotoReviewService noPhotoReviewService;
+    private final NoPhotoReviewServiceImp noPhotoReviewService;
 
     @PostMapping
     @Operation(summary = "사진없는 리뷰생성", description = "사진없는 리뷰를 생성합니다.")
@@ -83,6 +83,11 @@ public class NoPhotoReviewController {
         } catch (ReviewNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/has-written/{orderDetailId}")
+    public ResponseEntity<Boolean> hasWrittenReview(@PathVariable Long orderDetailId) {
+        return ResponseEntity.ok(noPhotoReviewService.isReviewExist(orderDetailId));
     }
 
 }
