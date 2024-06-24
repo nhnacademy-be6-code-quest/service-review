@@ -85,8 +85,8 @@ public class PhotoReviewServiceImp implements PhotoReviewService {
     }
 
     @Override
-    public boolean isReviewExist(Long id) {
-        return photoReviewRepository.existsById(id);
+    public boolean isReviewExist(Long orderDetailId) {
+        return photoReviewRepository.existsByOrderDetailId(orderDetailId);
     }
 
     private PhotoReview toEntity(PhotoReviewRequestDTO dto) {

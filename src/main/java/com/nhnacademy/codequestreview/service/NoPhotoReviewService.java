@@ -24,5 +24,5 @@ public interface NoPhotoReviewService {
 
     void deleteReview(Long id);
 
-    boolean isReviewExist(Long id);
+    boolean isReviewExist(Long orderDetailId);
 }

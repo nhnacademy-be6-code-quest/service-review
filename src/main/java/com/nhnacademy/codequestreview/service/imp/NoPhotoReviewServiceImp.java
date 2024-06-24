@@ -75,8 +75,8 @@ public class NoPhotoReviewServiceImp implements NoPhotoReviewService {
     }
 
     @Override
-    public boolean isReviewExist(Long id) {
-        return noPhotoReviewRepository.existsById(id);
+    public boolean isReviewExist(Long orderDetailId) {
+        return noPhotoReviewRepository.existsByOrderDetailId(orderDetailId);
     }
 
     private NoPhotoReview toEntity(NoPhotoReviewRequestDTO dto) {
