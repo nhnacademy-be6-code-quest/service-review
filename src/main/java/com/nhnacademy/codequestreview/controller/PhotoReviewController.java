@@ -84,6 +84,7 @@ public class PhotoReviewController {
     }
 
     @GetMapping("/has-written/{orderDetailId}")
+    @Operation(summary = "리뷰작성여부 조회", description = "리뷰작성여부를 조회합니다.")
     public ResponseEntity<Boolean> hasWrittenReview(@PathVariable Long orderDetailId) {
         return ResponseEntity.ok(photoReviewService.isReviewExist(orderDetailId));
     }
