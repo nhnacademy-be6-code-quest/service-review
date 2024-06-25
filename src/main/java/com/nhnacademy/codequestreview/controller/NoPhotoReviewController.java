@@ -73,7 +73,6 @@ public class NoPhotoReviewController {
         }
     }
 
-
     @DeleteMapping("/{id}")
     @Operation(summary = "사진없는 리뷰삭제", description = "사진없는 리뷰를 삭제합니다.")
     public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
