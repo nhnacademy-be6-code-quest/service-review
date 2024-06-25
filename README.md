@@ -1,5 +1,5 @@
-리뷰 api 실행 후
+## API 문서
 
-http://localhost:8007/swagger 접속시
+API 문서는 Swagger UI를 통해 확인할 수 있습니다. Swagger UI는 다음 링크에서 접근할 수 있습니다:
 
-swagger를 통해 api조회 가능
+[Swagger UI](http://localhost:8007/swagger-ui/index.html)
