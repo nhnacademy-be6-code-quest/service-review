@@ -116,6 +116,7 @@ class PhotoReviewControllerTest {
             .andDo(print());
     }
 
+    // TODO 2 fix testcode
 //    @Test
 //    void testGetAllReviewsByClientId() throws Exception {
 //        PhotoReviewResponseDTO responseDTO = new PhotoReviewResponseDTO();

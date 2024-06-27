@@ -111,6 +111,7 @@ class NoPhotoReviewControllerTest {
             .andDo(print());
     }
 
+    // TODO 1 fix testcode
 //    @Test
 //    void testGetAllReviewsByClientId() throws Exception {
 //        NoPhotoReviewResponseDTO responseDTO = new NoPhotoReviewResponseDTO();
