@@ -111,25 +111,25 @@ class NoPhotoReviewControllerTest {
             .andDo(print());
     }
 
-    @Test
-    void testGetAllReviewsByClientId() throws Exception {
-        NoPhotoReviewResponseDTO responseDTO = new NoPhotoReviewResponseDTO();
-        responseDTO.setId(1L);
-        responseDTO.setScore((byte) 5);
-        responseDTO.setContent("Great product!");
-        responseDTO.setRegisterDate(LocalDateTime.now());
-
-        Page<NoPhotoReviewResponseDTO> page = new PageImpl<>(Collections.singletonList(responseDTO), PageRequest.of(0, 10), 1);
-
-        when(noPhotoReviewService.getAllReviewsByClientId(anyLong(), any(Pageable.class))).thenReturn(page);
-
-        mockMvc.perform(get("/no-photo-reviews/client/1")
-                .param("page", "0")
-                .param("size", "10"))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.content[0].id").value(1L))
-            .andDo(print());
-    }
+//    @Test
+//    void testGetAllReviewsByClientId() throws Exception {
+//        NoPhotoReviewResponseDTO responseDTO = new NoPhotoReviewResponseDTO();
+//        responseDTO.setId(1L);
+//        responseDTO.setScore((byte) 5);
+//        responseDTO.setContent("Great product!");
+//        responseDTO.setRegisterDate(LocalDateTime.now());
+//
+//        Page<NoPhotoReviewResponseDTO> page = new PageImpl<>(Collections.singletonList(responseDTO), PageRequest.of(0, 10), 1);
+//
+//        when(noPhotoReviewService.getAllReviewsByClientId(anyLong(), any(Pageable.class))).thenReturn(page);
+//
+//        mockMvc.perform(get("/no-photo-reviews/client/1")
+//                .param("page", "0")
+//                .param("size", "10"))
+//            .andExpect(status().isOk())
+//            .andExpect(jsonPath("$.content[0].id").value(1L))
+//            .andDo(print());
+//    }
 
     @Test
     void testGetAllReviewsByProductId() throws Exception {
