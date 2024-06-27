@@ -28,9 +28,9 @@
 //    @GetMapping
 //    ResponseEntity<Page<NoPhotoReviewResponseDTO>> getAllReviews(Pageable pageable);
 //
-//    @GetMapping("/client/{clientId}")
+//    @GetMapping("/client")
 //    ResponseEntity<Page<NoPhotoReviewResponseDTO>> getAllReviewsByClientId(
-//        @PathVariable Long clientId, Pageable pageable);
+//        Long clientId, Pageable pageable);
 //
 //    @GetMapping("/product/{productId}")
 //    ResponseEntity<Page<NoPhotoReviewResponseDTO>> getAllReviewsByProductId(

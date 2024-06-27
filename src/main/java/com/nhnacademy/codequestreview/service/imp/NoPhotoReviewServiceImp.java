@@ -39,7 +39,6 @@ public class NoPhotoReviewServiceImp implements NoPhotoReviewService {
             .map(this::toResponseDTO);
     }
 
-
     public Page<NoPhotoReviewResponseDTO> getAllReviewsByClientId(Long clientId,
         Pageable pageable) {
         return noPhotoReviewRepository.findAllByClientId(clientId, pageable)

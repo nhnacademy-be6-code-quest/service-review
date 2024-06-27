@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+@Slf4j
 @RestController
 @RequestMapping("/no-photo-reviews")
 @RequiredArgsConstructor
@@ -46,11 +48,14 @@ public class NoPhotoReviewController {
         return ResponseEntity.ok(noPhotoReviewService.getAllReviews(pageable));
     }
 
-    @GetMapping("/client/{id}")
+
+    @GetMapping("/client")
     @Operation(summary = "유저아이디로 리뷰조회", description = "유저아이디로 리뷰를 조회합니다.")
-    public ResponseEntity<Page<NoPhotoReviewResponseDTO>> getAllReviewsByClientId(
-        @PathVariable Long id, Pageable pageable) {
-        return ResponseEntity.ok(noPhotoReviewService.getAllReviewsByClientId(id, pageable));
+    public ResponseEntity<Page<NoPhotoReviewResponseDTO>> getAllReviewsByClientId(Long clientId,
+        Pageable pageable) {
+        log.info("Get clientId : {}", clientId);
+
+        return ResponseEntity.ok(noPhotoReviewService.getAllReviewsByClientId(clientId, pageable));
     }
 
     @GetMapping("/product/{id}")
